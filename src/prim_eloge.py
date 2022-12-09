@@ -10,9 +10,9 @@ from dataclasses import dataclass
 class Edge:
     """This class just put the < order on edges."""
 
-    src: int
-    w: float
-    dst: int
+    src: int #source
+    w: float #weight
+    dst: int #destination
 
     def __lt__(self, other: Any) -> bool:
         """Tell us if self has lower weight than other."""
@@ -85,6 +85,14 @@ def prim(graph: Graph) -> list[Edge]:
     # FIXME: Algorithm needed here!
     ...
 
+    for _ in range(graph.no_nodes-1):
+        edge = heapq.heappop(heap)
+        if edge.dst not in seen:
+            tree.append(edge)
+            seen.append(edge.dst)
+            new_edges = graph.edges[edge.dst][:]
+            heapq.heapify(heap)
+            heap = list[heapq.merge(heap, next_edges)]
     return tree
 
 
